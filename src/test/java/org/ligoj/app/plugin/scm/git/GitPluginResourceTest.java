@@ -59,7 +59,8 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	@Before
 	public void prepareData() throws IOException {
 		// Only with Spring context
-		persistEntities("csv", new Class[] { Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class },
+		persistEntities("csv",
+				new Class[] { Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class },
 				StandardCharsets.UTF_8.name());
 		this.subscription = getSubscription("gStack");
 		CacheManager.getInstance().getCache("node-parameters").removeAll();
@@ -71,7 +72,8 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	/**
-	 * Return the subscription identifier of MDA. Assumes there is only one subscription for a service.
+	 * Return the subscription identifier of the given project. Assumes there is
+	 * only one subscription for a service.
 	 */
 	protected Integer getSubscription(final String project) {
 		return getSubscription(project, GitPluginResource.KEY);
@@ -100,7 +102,8 @@ public class GitPluginResourceTest extends AbstractServerTest {
 		prepareMockRepository();
 		httpServer.start();
 
-		// Invoke create for an already created entity, since for now, there is nothing but validation pour SonarQube
+		// Invoke create for an already created entity, since for now, there is
+		// nothing but validation pour SonarQube
 		resource.link(this.subscription);
 
 		// Nothing to validate for now...
@@ -115,11 +118,13 @@ public class GitPluginResourceTest extends AbstractServerTest {
 		httpServer.start();
 
 		parameterValueRepository.findAllBySubscription(subscription).stream()
-				.filter(v -> v.getParameter().getId().equals(GitPluginResource.KEY + ":repository")).findFirst().get().setData("0");
+				.filter(v -> v.getParameter().getId().equals(GitPluginResource.KEY + ":repository")).findFirst().get()
+				.setData("0");
 		em.flush();
 		em.clear();
 
-		// Invoke create for an already created entity, since for now, there is nothing but validation pour SonarQube
+		// Invoke create for an already created entity, since for now, there is
+		// nothing but validation pour SonarQube
 		resource.link(this.subscription);
 
 		// Nothing to validate for now...
@@ -128,7 +133,8 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	@Test
 	public void checkSubscriptionStatus() throws Exception {
 		prepareMockRepository();
-		Assert.assertTrue(resource.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(subscription)).getStatus().isUp());
+		Assert.assertTrue(resource.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(subscription))
+				.getStatus().isUp());
 	}
 
 	@Test
@@ -143,15 +149,19 @@ public class GitPluginResourceTest extends AbstractServerTest {
 
 	private void prepareMockRepository() throws IOException {
 		// --> /gfi-gstack/info/refs?service=git-upload-pack
-		httpServer.stubFor(get(urlPathEqualTo("/gfi-gstack/info/refs")).willReturn(
-				aResponse().withStatus(HttpStatus.SC_OK).withHeader("Content-Type", "application/x-git-upload-pack-advertisement").withBody(
-						IOUtils.toString(new ClassPathResource("mock-server/scm/git/git-upload-pack").getInputStream(), StandardCharsets.UTF_8))));
+		httpServer.stubFor(
+				get(urlPathEqualTo("/gfi-gstack/info/refs")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
+						.withHeader("Content-Type", "application/x-git-upload-pack-advertisement")
+						.withBody(IOUtils.toString(
+								new ClassPathResource("mock-server/scm/git/git-upload-pack").getInputStream(),
+								StandardCharsets.UTF_8))));
 		httpServer.start();
 	}
 
 	private void prepareMockAdmin() throws IOException {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
-				.withBody(IOUtils.toString(new ClassPathResource("mock-server/scm/index.html").getInputStream(), StandardCharsets.UTF_8))));
+				.withBody(IOUtils.toString(new ClassPathResource("mock-server/scm/index.html").getInputStream(),
+						StandardCharsets.UTF_8))));
 		httpServer.start();
 	}
 
@@ -182,22 +192,24 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	public void checkStatusInvalidIndex() throws Exception {
 		thrown.expect(ValidationJsonException.class);
 		thrown.expect(MatcherUtil.validationMatcher(GitPluginResource.KEY + ":url", "git-admin"));
-		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
+		httpServer.stubFor(get(urlPathEqualTo("/"))
+				.willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
 		resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription));
 	}
 
 	@Test
 	public void checkStatusGitProtocol() throws Exception {
-		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter").setParameter("data", "git://any")
-				.setParameter("parameter", "service:scm:git:url").executeUpdate();
+		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter")
+				.setParameter("data", "git://any").setParameter("parameter", "service:scm:git:url").executeUpdate();
 		Assert.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription)));
 	}
 
 	@Test
 	public void checkStatusNoIndex() throws Exception {
-		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter").setParameter("data", Boolean.FALSE.toString())
-				.setParameter("parameter", "service:scm:git:index").executeUpdate();
+		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter")
+				.setParameter("data", Boolean.FALSE.toString()).setParameter("parameter", "service:scm:git:index")
+				.executeUpdate();
 		Assert.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription)));
 	}
 
