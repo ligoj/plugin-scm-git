@@ -20,5 +20,10 @@
 			<artifactId>plugin-scm</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
+		<dependency>
+			<groupId>org.eclipse.jgit</groupId>
+			<artifactId>org.eclipse.jgit</artifactId>
+			<version>4.4.0.201605250940-rc1</version>
+		</dependency>
 	</dependencies>
 </project>

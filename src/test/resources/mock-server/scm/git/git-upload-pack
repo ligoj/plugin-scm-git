@@ -1,0 +1,5 @@
+001e# service=git-upload-pack
+000000d165e5cd985831aba985bdc3750134432b503e14ae HEAD multi_ack thin-pack side-band side-band-64k ofs-delta shallow no-progress include-tag multi_ack_detailed no-done symref=HEAD:refs/heads/master agent=git/2.7.2
+003c215370fca462146bdad24ebffa0a6e59a7b23f43 refs/heads/dev
+003f65e5cd985831aba985bdc3750134432b503e14ae refs/heads/master
+0000
