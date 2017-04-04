@@ -1,11 +1,11 @@
 define({
-	'service:scm:svn:url': 'URL de base',
-	'service:scm:svn:repository': 'Dépôt',
-	'service:scm:svn:user': 'Utilisateur',
-	'service:scm:svn:password': 'Mot de passe',
+	'service:scm:git:url': 'URL de base',
+	'service:scm:git:repository': 'Dépôt',
+	'service:scm:git:user': 'Utilisateur',
+	'service:scm:git:password': 'Mot de passe',
 	'error': {
-		'svn-admin': 'Accès administrateur échoué',
-		'svn-repository': 'Dépôt Subversion invalide'
+		'git-admin': 'Accès administrateur échoué',
+		'git-repository': 'Dépôt Subversion invalide'
 	}
 
 });
