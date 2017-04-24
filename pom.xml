@@ -59,6 +59,8 @@
 							<artifactSet>
 								<includes>
 									<include>org.eclipse.jgit:*</include>
+									<include>com.jcraft:*</include>
+									<include>com.googlecode.javaewah:*</include>
 								</includes>
 							</artifactSet>
 						</configuration>
