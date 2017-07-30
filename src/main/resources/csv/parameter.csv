@@ -3,4 +3,4 @@ service:scm:git:url;service:scm:git;;true;TEXT;;
 service:scm:git:user;service:scm:git;;true;TEXT;;true
 service:scm:git:password;service:scm:git;;true;TEXT;;true
 service:scm:git:repository;service:scm:git;;true;TEXT;;
-service:scm:git:index;service:scm:git;;false;BINARY;;
+service:scm:git:index;service:scm:git;;false;BOOL;;
