@@ -1,2 +1,2 @@
-id;name;refined.id;mode;uiClasses;tag;tagUiClasses
-service:scm:git;git;service:scm;;fa fa-git;LINK;
+id;name;refined.id;mode;uiClasses
+service:scm:git;git;service:scm;;fa fa-git
