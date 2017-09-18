@@ -14,6 +14,6 @@
 [![Known Vulnerabilities](https://snyk.io/test/github/ligoj/plugin-scm-git/badge.svg)](https://snyk.io/test/github/ligoj/plugin-scm-git)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://gus.mit-license.org/)
 
-[Ligoj](https://github.com/ligoj/ligoj) GIT plugin, and extending [Provisioning plugin](https://github.com/ligoj/plugin-scm)
+[Ligoj](https://github.com/ligoj/ligoj) GIT plugin, and extending [SCM plugin](https://github.com/ligoj/plugin-scm)
 Provides the following features :
-- TODO
+- None for now
