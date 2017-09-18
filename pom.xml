@@ -19,6 +19,10 @@
 		<developerConnection>scm:git:https://github.com/ligoj/plugin-scm-git</developerConnection>
 		<url>https://github.com/ligoj/plugin-scm-git.git</url>
 	</scm>
+	<properties>
+		<jgit.version>4.8.0.201706111038-r</jgit.version>
+		<jsch.version>0.1.54</jsch.version>
+	</properties>
 
 	<dependencies>
 		<dependency>
@@ -30,9 +34,18 @@
 		<dependency>
 			<groupId>org.eclipse.jgit</groupId>
 			<artifactId>org.eclipse.jgit</artifactId>
-			<version>4.4.0.201605250940-rc1</version>
+			<version>${jgit.version}</version>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.jcraft</groupId>
+				<artifactId>jsch</artifactId>
+				<version>${jsch.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>

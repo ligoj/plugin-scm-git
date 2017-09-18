@@ -11,6 +11,7 @@
 [![Sourcegraph Badge](https://sourcegraph.com/github.com/ligoj/plugin-scm-git/-/badge.svg)](https://sourcegraph.com/github.com/ligoj/plugin-scm-git?badge)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8e23da67383f41988e181e4cc8a873fa)](https://www.codacy.com/app/ligoj/plugin-scm-git?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ligoj/plugin-scm-git&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/ligoj/plugin-scm-git/badge)](https://www.codefactor.io/repository/github/ligoj/plugin-scm-git)
+[![Known Vulnerabilities](https://snyk.io/test/github/ligoj/plugin-scm-git/badge.svg)](https://snyk.io/test/github/ligoj/plugin-scm-git)
 [![License](http://img.shields.io/:license-mit-blue.svg)](http://gus.mit-license.org/)
 
 [Ligoj](https://github.com/ligoj/ligoj) GIT plugin, and extending [Provisioning plugin](https://github.com/ligoj/plugin-scm)
