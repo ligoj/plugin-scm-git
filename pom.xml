@@ -20,8 +20,7 @@
 		<url>https://github.com/ligoj/plugin-scm-git.git</url>
 	</scm>
 	<properties>
-		<jgit.version>4.8.0.201706111038-r</jgit.version>
-		<jsch.version>0.1.54</jsch.version>
+		<jgit.version>4.9.0.201710071750-r</jgit.version>
 	</properties>
 
 	<dependencies>
@@ -37,15 +36,6 @@
 			<version>${jgit.version}</version>
 		</dependency>
 	</dependencies>
-	<dependencyManagement>
-		<dependencies>
-			<dependency>
-				<groupId>com.jcraft</groupId>
-				<artifactId>jsch</artifactId>
-				<version>${jsch.version}</version>
-			</dependency>
-		</dependencies>
-	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>
