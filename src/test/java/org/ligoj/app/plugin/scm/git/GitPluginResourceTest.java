@@ -161,7 +161,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusAuthenticationFailed() throws Exception {
+	public void checkStatusAuthenticationFailed() {
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
 			resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription));
@@ -169,7 +169,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusNotAdmin() throws Exception {
+	public void checkStatusNotAdmin() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
@@ -178,7 +178,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusInvalidIndex() throws Exception {
+	public void checkStatusInvalidIndex() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
@@ -187,14 +187,14 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusGitProtocol() throws Exception {
+	public void checkStatusGitProtocol() {
 		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter").setParameter("data", "git://any")
 				.setParameter("parameter", "service:scm:git:url").executeUpdate();
 		Assertions.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription)));
 	}
 
 	@Test
-	public void checkStatusNoIndex() throws Exception {
+	public void checkStatusNoIndex() {
 		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter").setParameter("data", Boolean.FALSE.toString())
 				.setParameter("parameter", "service:scm:git:index").executeUpdate();
 		Assertions.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription)));
