@@ -16,12 +16,15 @@ import org.ligoj.app.plugin.scm.ScmServicePlugin;
 import org.ligoj.bootstrap.core.validation.ValidationJsonException;
 import org.springframework.stereotype.Component;
 
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * GIT resource. jGit is used to perform validations.
  */
 @Path(GitPluginResource.URL)
 @Component
 @Produces(MediaType.APPLICATION_JSON)
+@Slf4j
 public class GitPluginResource extends AbstractIndexBasedPluginResource implements ScmServicePlugin {
 
 	/**
@@ -43,18 +46,23 @@ public class GitPluginResource extends AbstractIndexBasedPluginResource implemen
 
 	@Override
 	public String validateRepository(final Map<String, String> parameters) {
+		final String url = super.getRepositoryUrl(parameters);
 		// Use jGit {@link LsRemoteCommand} to validate remote GIT repository
-		final LsRemoteCommand command = new LsRemoteCommand(null).setRemote(super.getRepositoryUrl(parameters));
+		final LsRemoteCommand command = new LsRemoteCommand(null).setRemote(url);
 		final String username = parameters.get(parameterUser);
 		if (StringUtils.isNotBlank(username)) {
 			// Authentication is required
-			command.setCredentialsProvider(new UsernamePasswordCredentialsProvider(username, parameters.get(parameterPassword)));
+			command.setCredentialsProvider(
+					new UsernamePasswordCredentialsProvider(username, parameters.get(parameterPassword)));
 		}
+		// Get the repository information
 		try {
 			return command.call().toString();
 		} catch (final GitAPIException e) {
 			// Invalid Git repository
-			throw new ValidationJsonException(parameterRepository, simpleName + "-repository", parameters.get(parameterRepository), e);
+			log.error("Git validation failed for url {}", url, e);
+			throw new ValidationJsonException(parameterRepository, simpleName + "-repository",
+					parameters.get(parameterRepository));
 		}
 	}
 }
