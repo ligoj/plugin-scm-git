@@ -6,7 +6,7 @@
 [![Build Status](https://semaphoreci.com/api/v1/ligoj/plugin-scm-git/branches/master/shields_badge.svg)](https://semaphoreci.com/ligoj/plugin-scm-git)
 [![Build Status](https://ci.appveyor.com/api/projects/status/od4nfwlbgqjn5i1j/branch/master?svg=true)](https://ci.appveyor.com/project/ligoj/plugin-scm-git/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/ligoj/plugin-scm-git/badge.svg?branch=master)](https://coveralls.io/github/ligoj/plugin-scm-git?branch=master)
-[![Quality Gate](https://sonarcloud.io/api/badges/gate?key=org.ligoj.plugin:plugin-scm-git)](https://sonarcloud.io/dashboard/index/org.ligoj.plugin:plugin-scm-git)
+[![Quality Gate](https://sonarcloud.io/api/project_badges/measure?metric=alert_status&project=org.ligoj.plugin:plugin-scm-git)](https://sonarcloud.io/dashboard/index/org.ligoj.plugin:plugin-scm-git)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/8e23da67383f41988e181e4cc8a873fa)](https://www.codacy.com/app/ligoj/plugin-scm-git?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=ligoj/plugin-scm-git&amp;utm_campaign=Badge_Grade)
 [![CodeFactor](https://www.codefactor.io/repository/github/ligoj/plugin-scm-git/badge)](https://www.codefactor.io/repository/github/ligoj/plugin-scm-git)
 [![Known Vulnerabilities](https://snyk.io/test/github/ligoj/plugin-scm-git/badge.svg)](https://snyk.io/test/github/ligoj/plugin-scm-git)
