@@ -36,8 +36,6 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import net.sf.ehcache.CacheManager;
-
 /**
  * Test class of {@link GitPluginResource}
  */
@@ -67,9 +65,9 @@ public class GitPluginResourceTest extends AbstractServerTest {
 				new Class[] { Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class },
 				StandardCharsets.UTF_8.name());
 		this.subscription = getSubscription("gStack");
-		CacheManager.getInstance().getCache("node-parameters").removeAll();
-		CacheManager.getInstance().getCache("subscription-parameters").removeAll();
-		CacheManager.getInstance().getCache("nodes").removeAll();
+		cacheManager.getCache("node-parameters").clear();
+		cacheManager.getCache("subscription-parameters").clear();
+		cacheManager.getCache("nodes").clear();
 		configuration.delete("service:scm:git:sslVerify");
 
 		// Coverage only
@@ -175,7 +173,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	@Test
 	public void checkSubscriptionStatusSsl() throws Exception {
 		final Map<String, String> parametersNoCheck = mockHtps();
-		configuration.saveOrUpdate("service:scm:git:sslVerify", "false");
+		configuration.put("service:scm:git:sslVerify", "false");
 		Assertions.assertTrue(resource.checkSubscriptionStatus(parametersNoCheck).getStatus().isUp());
 		resource.new InsecureHttpConnectionFactory().create(new URL("https", "github.com", "ligoj/ligoj.git"));
 	}
@@ -183,7 +181,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	@Test
 	public void checkSubscriptionStatusSslVerifyOff() throws Exception {
 		final Map<String, String> parametersNoCheck = mockHtps();
-		configuration.saveOrUpdate("service:scm:git:sslVerify", "true");
+		configuration.put("service:scm:git:sslVerify", "true");
 		Assertions.assertTrue(resource.checkSubscriptionStatus(parametersNoCheck).getStatus().isUp());
 	}
 
