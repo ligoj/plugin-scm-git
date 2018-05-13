@@ -10,7 +10,7 @@
 
 	<groupId>org.ligoj.plugin</groupId>
 	<artifactId>plugin-scm-git</artifactId>
-	<version>1.0.5-SNAPSHOT</version>
+	<version>1.0.5</version>
 	<packaging>jar</packaging>
 	<name>Ligoj - Plugin SCM - Git</name>
 	<url>https://github.com/ligoj/plugin-scm-git</url>
