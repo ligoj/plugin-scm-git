@@ -147,9 +147,9 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	private void prepareMockRepository() throws IOException {
-		// --> /gfi-gstack/info/refs?service=git-upload-pack
+		// --> /ligoj-gstack/info/refs?service=git-upload-pack
 		httpServer.stubFor(
-				get(urlPathEqualTo("/gfi-gstack/info/refs")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
+				get(urlPathEqualTo("/ligoj-gstack/info/refs")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
 						.withHeader("Content-Type", "application/x-git-upload-pack-advertisement")
 						.withBody(IOUtils.toString(
 								new ClassPathResource("mock-server/scm/git/git-upload-pack").getInputStream(),
