@@ -43,7 +43,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 @ContextConfiguration(locations = "classpath:/META-INF/spring/application-context-test.xml")
 @Rollback
 @Transactional
-public class GitPluginResourceTest extends AbstractServerTest {
+class GitPluginResourceTest extends AbstractServerTest {
 	@Autowired
 	private GitPluginResource resource;
 
@@ -59,7 +59,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	protected int subscription;
 
 	@BeforeEach
-	public void prepareData() throws IOException {
+	void prepareData() throws IOException {
 		// Only with Spring context
 		persistEntities("csv",
 				new Class[] { Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class },
@@ -77,12 +77,12 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	/**
 	 * Return the subscription identifier of the given project. Assumes there is only one subscription for a service.
 	 */
-	protected Integer getSubscription(final String project) {
+	private Integer getSubscription(final String project) {
 		return getSubscription(project, GitPluginResource.KEY);
 	}
 
 	@Test
-	public void delete() throws Exception {
+	void delete() throws Exception {
 		resource.delete(subscription, false);
 		em.flush();
 		em.clear();
@@ -90,17 +90,17 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void getVersion() throws Exception {
+	void getVersion() throws Exception {
 		Assertions.assertNull(resource.getVersion(subscription));
 	}
 
 	@Test
-	public void getLastVersion() throws Exception {
+	void getLastVersion() throws Exception {
 		Assertions.assertNull(resource.getLastVersion());
 	}
 
 	@Test
-	public void link() throws Exception {
+	void link() throws Exception {
 		prepareMockRepository();
 		httpServer.start();
 
@@ -112,7 +112,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void linkNotFound() throws Exception {
+	void linkNotFound() throws Exception {
 		prepareMockRepository();
 		httpServer.start();
 
@@ -130,14 +130,14 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkSubscriptionStatus() throws Exception {
+	void checkSubscriptionStatus() throws Exception {
 		prepareMockRepository();
 		Assertions.assertTrue(resource.checkSubscriptionStatus(subscriptionResource.getParametersNoCheck(subscription))
 				.getStatus().isUp());
 	}
 
 	@Test
-	public void checkSubscriptionStatusAnonymous() throws Exception {
+	void checkSubscriptionStatusAnonymous() throws Exception {
 		prepareMockRepository();
 
 		// Remove user from the parameters to be anonymous
@@ -165,13 +165,13 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatus() throws Exception {
+	void checkStatus() throws Exception {
 		prepareMockAdmin();
 		Assertions.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription)));
 	}
 
 	@Test
-	public void checkSubscriptionStatusSsl() throws Exception {
+	void checkSubscriptionStatusSsl() throws Exception {
 		final Map<String, String> parametersNoCheck = mockHtps();
 		configuration.put("service:scm:git:sslVerify", "false");
 		Assertions.assertTrue(resource.checkSubscriptionStatus(parametersNoCheck).getStatus().isUp());
@@ -179,7 +179,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkSubscriptionStatusSslVerifyOff() throws Exception {
+	void checkSubscriptionStatusSslVerifyOff() throws Exception {
 		final Map<String, String> parametersNoCheck = mockHtps();
 		configuration.put("service:scm:git:sslVerify", "true");
 		Assertions.assertTrue(resource.checkSubscriptionStatus(parametersNoCheck).getStatus().isUp());
@@ -199,7 +199,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusAuthenticationFailed() {
+	void checkStatusAuthenticationFailed() {
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
 			resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription));
@@ -207,7 +207,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusNotAdmin() {
+	void checkStatusNotAdmin() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 		httpServer.start();
 		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
@@ -216,7 +216,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusInvalidIndex() {
+	void checkStatusInvalidIndex() {
 		httpServer.stubFor(get(urlPathEqualTo("/"))
 				.willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
@@ -226,14 +226,14 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void checkStatusGitProtocol() {
+	void checkStatusGitProtocol() {
 		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter")
 				.setParameter("data", "git://any").setParameter("parameter", "service:scm:git:url").executeUpdate();
 		Assertions.assertTrue(resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription)));
 	}
 
 	@Test
-	public void checkStatusNoIndex() {
+	void checkStatusNoIndex() {
 		em.createQuery("UPDATE ParameterValue SET data=:data WHERE parameter.id=:parameter")
 				.setParameter("data", Boolean.FALSE.toString()).setParameter("parameter", "service:scm:git:index")
 				.executeUpdate();
@@ -241,7 +241,7 @@ public class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	@Test
-	public void findAllByName() throws Exception {
+	void findAllByName() throws Exception {
 		prepareMockAdmin();
 		httpServer.start();
 

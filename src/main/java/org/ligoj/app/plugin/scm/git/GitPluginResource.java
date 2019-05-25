@@ -87,6 +87,9 @@ public class GitPluginResource extends AbstractIndexBasedPluginResource implemen
 		}
 	}
 
+	/**
+	 * Configure the SSL factory.
+	 */
 	@PostConstruct
 	public void configureConnectionFactory() {
 		// Ignore SSL verification
