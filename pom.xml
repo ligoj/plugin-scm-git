@@ -20,7 +20,7 @@
 		<url>https://github.com/ligoj/plugin-scm-git.git</url>
 	</scm>
 	<properties>
-		<jgit.version>4.11.0.201803080745-r</jgit.version>
+		<jgit.version>5.7.0.202003110725-r</jgit.version>
 	</properties>
 
 	<dependencies>
