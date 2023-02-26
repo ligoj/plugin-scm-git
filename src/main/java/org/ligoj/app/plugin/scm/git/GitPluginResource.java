@@ -5,10 +5,10 @@ import java.net.Proxy;
 import java.net.URL;
 import java.util.Map;
 
-import javax.annotation.PostConstruct;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
+import jakarta.annotation.PostConstruct;
+import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.ObjectUtils;
