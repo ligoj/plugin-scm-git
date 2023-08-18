@@ -3,4 +3,4 @@ service:scm:git:url;http://localhost:8120;service:scm:git:dig;
 service:scm:git:user;junit;service:scm:git:dig;
 service:scm:git:password;secret;service:scm:git:dig;
 service:scm:git:index;true;service:scm:git:dig;
-service:scm:git:repository;ligoj-gstack;;1
+service:scm:git:repository;ligoj-jupiter;;1

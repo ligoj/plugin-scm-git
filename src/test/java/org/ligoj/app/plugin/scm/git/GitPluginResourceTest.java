@@ -64,7 +64,7 @@ class GitPluginResourceTest extends AbstractServerTest {
 		persistEntities("csv",
 				new Class[] { Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class },
 				StandardCharsets.UTF_8.name());
-		this.subscription = getSubscription("gStack");
+		this.subscription = getSubscription("Jupiter");
 		cacheManager.getCache("node-parameters").clear();
 		cacheManager.getCache("subscription-parameters").clear();
 		cacheManager.getCache("nodes").clear();
@@ -147,9 +147,9 @@ class GitPluginResourceTest extends AbstractServerTest {
 	}
 
 	private void prepareMockRepository() throws IOException {
-		// --> /ligoj-gstack/info/refs?service=git-upload-pack
+		// --> /ligoj-jupiter/info/refs?service=git-upload-pack
 		httpServer.stubFor(
-				get(urlPathEqualTo("/ligoj-gstack/info/refs")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
+				get(urlPathEqualTo("/ligoj-jupiter/info/refs")).willReturn(aResponse().withStatus(HttpStatus.SC_OK)
 						.withHeader("Content-Type", "application/x-git-upload-pack-advertisement")
 						.withBody(IOUtils.toString(
 								new ClassPathResource("mock-server/scm/git/git-upload-pack").getInputStream(),
