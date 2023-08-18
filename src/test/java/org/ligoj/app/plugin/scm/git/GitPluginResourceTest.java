@@ -1,30 +1,15 @@
 package org.ligoj.app.plugin.scm.git;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
-import static com.github.tomakehurst.wiremock.client.WireMock.urlPathEqualTo;
-
-import java.io.IOException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
-import java.util.List;
-import java.util.Map;
-
 import jakarta.transaction.Transactional;
-
 import org.apache.commons.io.IOUtils;
-import org.apache.http.HttpStatus;
+import org.apache.hc.core5.http.HttpStatus;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.ligoj.app.AbstractServerTest;
 import org.ligoj.app.dao.ParameterValueRepository;
-import org.ligoj.app.model.Node;
-import org.ligoj.app.model.Parameter;
-import org.ligoj.app.model.ParameterValue;
-import org.ligoj.app.model.Project;
-import org.ligoj.app.model.Subscription;
+import org.ligoj.app.model.*;
 import org.ligoj.app.resource.subscription.SubscriptionResource;
 import org.ligoj.bootstrap.MatcherUtil;
 import org.ligoj.bootstrap.core.NamedBean;
@@ -35,6 +20,14 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.io.IOException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
+import java.util.List;
+import java.util.Map;
+
+import static com.github.tomakehurst.wiremock.client.WireMock.*;
 
 /**
  * Test class of {@link GitPluginResource}
@@ -62,8 +55,8 @@ class GitPluginResourceTest extends AbstractServerTest {
 	void prepareData() throws IOException {
 		// Only with Spring context
 		persistEntities("csv",
-				new Class[] { Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class },
-				StandardCharsets.UTF_8.name());
+				new Class[]{Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class},
+				StandardCharsets.UTF_8);
 		this.subscription = getSubscription("Jupiter");
 		cacheManager.getCache("node-parameters").clear();
 		cacheManager.getCache("subscription-parameters").clear();
@@ -71,7 +64,7 @@ class GitPluginResourceTest extends AbstractServerTest {
 		configuration.delete("service:scm:git:sslVerify");
 
 		// Coverage only
-		resource.getKey();
+		Assertions.assertEquals("service:scm:git", resource.getKey());
 	}
 
 	/**
@@ -124,9 +117,7 @@ class GitPluginResourceTest extends AbstractServerTest {
 
 		// Invoke create for an already created entity, since for now, there is
 		// nothing but validation pour SonarQube
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.link(this.subscription);
-		}), "service:scm:git:repository", "git-repository");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.link(this.subscription)), "service:scm:git:repository", "git-repository");
 	}
 
 	@Test
@@ -201,18 +192,14 @@ class GitPluginResourceTest extends AbstractServerTest {
 	@Test
 	void checkStatusAuthenticationFailed() {
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription));
-		}), GitPluginResource.KEY + ":url", "git-admin");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription))), GitPluginResource.KEY + ":url", "git-admin");
 	}
 
 	@Test
 	void checkStatusNotAdmin() {
 		httpServer.stubFor(get(urlPathEqualTo("/")).willReturn(aResponse().withStatus(HttpStatus.SC_NOT_FOUND)));
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription));
-		}), GitPluginResource.KEY + ":url", "git-admin");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription))), GitPluginResource.KEY + ":url", "git-admin");
 	}
 
 	@Test
@@ -220,9 +207,7 @@ class GitPluginResourceTest extends AbstractServerTest {
 		httpServer.stubFor(get(urlPathEqualTo("/"))
 				.willReturn(aResponse().withStatus(HttpStatus.SC_OK).withBody("<html>some</html>")));
 		httpServer.start();
-		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> {
-			resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription));
-		}), GitPluginResource.KEY + ":url", "git-admin");
+		MatcherUtil.assertThrows(Assertions.assertThrows(ValidationJsonException.class, () -> resource.checkStatus(subscriptionResource.getParametersNoCheck(subscription))), GitPluginResource.KEY + ":url", "git-admin");
 	}
 
 	@Test
@@ -247,8 +232,8 @@ class GitPluginResourceTest extends AbstractServerTest {
 
 		final List<NamedBean<String>> projects = resource.findAllByName("service:scm:git:dig", "as-");
 		Assertions.assertEquals(4, projects.size());
-		Assertions.assertEquals("has-evamed", projects.get(0).getId());
-		Assertions.assertEquals("has-evamed", projects.get(0).getName());
+		Assertions.assertEquals("has-event", projects.get(0).getId());
+		Assertions.assertEquals("has-event", projects.get(0).getName());
 	}
 
 }
