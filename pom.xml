@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.ligoj.api</groupId>
 		<artifactId>plugin-parent</artifactId>
-		<version>4.0.5</version>
+		<version>4.1.4</version>
 		<relativePath />
 	</parent>
 
@@ -20,7 +20,7 @@
 		<url>https://github.com/ligoj/plugin-scm-git.git</url>
 	</scm>
 	<properties>
-		<jgit.version>6.1.0.202203080745-r</jgit.version>
+		<jgit.version>6.8.0.202311291450-r</jgit.version>
 	</properties>
 
 	<dependencies>
