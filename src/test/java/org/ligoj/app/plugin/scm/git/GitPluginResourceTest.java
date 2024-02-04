@@ -22,7 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.io.IOException;
-import java.net.URL;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
@@ -55,7 +55,7 @@ class GitPluginResourceTest extends AbstractServerTest {
 	void prepareData() throws IOException {
 		// Only with Spring context
 		persistEntities("csv",
-				new Class[]{Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class},
+				new Class<?>[]{Node.class, Parameter.class, Project.class, Subscription.class, ParameterValue.class},
 				StandardCharsets.UTF_8);
 		this.subscription = getSubscription("Jupiter");
 		cacheManager.getCache("node-parameters").clear();
@@ -163,20 +163,20 @@ class GitPluginResourceTest extends AbstractServerTest {
 
 	@Test
 	void checkSubscriptionStatusSsl() throws Exception {
-		final Map<String, String> parametersNoCheck = mockHtps();
+		final Map<String, String> parametersNoCheck = mockHttps();
 		configuration.put("service:scm:git:sslVerify", "false");
 		Assertions.assertTrue(resource.checkSubscriptionStatus(parametersNoCheck).getStatus().isUp());
-		resource.new InsecureHttpConnectionFactory().create(new URL("https", "github.com", "ligoj/ligoj.git"));
+		resource.new InsecureHttpConnectionFactory().create(URI.create("https://github.com/ligoj/ligoj.git").toURL());
 	}
 
 	@Test
 	void checkSubscriptionStatusSslVerifyOff() throws Exception {
-		final Map<String, String> parametersNoCheck = mockHtps();
+		final Map<String, String> parametersNoCheck = mockHttps();
 		configuration.put("service:scm:git:sslVerify", "true");
 		Assertions.assertTrue(resource.checkSubscriptionStatus(parametersNoCheck).getStatus().isUp());
 	}
 
-	private Map<String, String> mockHtps() throws IOException {
+	private Map<String, String> mockHttps() throws IOException {
 		// This does not work because of Wiremock Jetty 9.2/9.4
 		// httpServer = new WireMockServer(MOCK_PORT, MOCK_PORT + 2);
 		prepareMockRepository();
@@ -232,8 +232,8 @@ class GitPluginResourceTest extends AbstractServerTest {
 
 		final List<NamedBean<String>> projects = resource.findAllByName("service:scm:git:dig", "as-");
 		Assertions.assertEquals(4, projects.size());
-		Assertions.assertEquals("has-event", projects.get(0).getId());
-		Assertions.assertEquals("has-event", projects.get(0).getName());
+		Assertions.assertEquals("has-event", projects.getFirst().getId());
+		Assertions.assertEquals("has-event", projects.getFirst().getName());
 	}
 
 }
