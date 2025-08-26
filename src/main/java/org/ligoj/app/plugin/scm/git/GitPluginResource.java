@@ -116,7 +116,7 @@ public class GitPluginResource extends AbstractIndexBasedPluginResource implemen
 
 		private HttpConnection create(URL url, final HttpConnection connection) throws IOException {
 			if (!"http".equals(url.getProtocol())
-					&& !BooleanUtils.toBoolean(ObjectUtils.defaultIfNull(configuration.get(CONF_SSL_VERIFY), "true"))) {
+					&& !BooleanUtils.toBoolean(ObjectUtils.getIfNull(configuration.get(CONF_SSL_VERIFY), "true"))) {
 				// Disable SSL verification only for HTTPS
 				HttpSupport.disableSslVerify(connection);
 			}
