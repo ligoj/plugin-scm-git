@@ -1,4 +1,4 @@
-# :link: Ligoj GIT plugin [![Maven Central](https://maven-badges.herokuapp.com/maven-central/org.ligoj.plugin/plugin-scm-git/badge.svg)](https://maven-badges.herokuapp.com/maven-central/org.ligoj.plugin/plugin-scm-git)
+# :link: Ligoj GIT plugin ![Maven Central](https://img.shields.io/maven-central/v/org.ligoj.plugin/plugin-scm-git)
 
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=org.ligoj.plugin%3Aplugin-scm-git&metric=coverage)](https://sonarcloud.io/dashboard?id=org.ligoj.plugin%3Aplugin-scm-git)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?metric=alert_status&project=org.ligoj.plugin:plugin-scm-git)](https://sonarcloud.io/dashboard/index/org.ligoj.plugin:plugin-scm-git)
