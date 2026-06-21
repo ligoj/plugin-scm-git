@@ -13,8 +13,7 @@
  *
  * Kept free of Vue SFC imports so it can be unit-tested without a DOM.
  */
-import { h } from 'vue'
-import { VBtn, VChip, VIcon, useI18nStore } from '@ligoj/host'
+import { renderServiceLink, renderDetailsChip, useI18nStore } from '@ligoj/host'
 
 const PARAM_URL = 'service:scm:git:url'
 const PARAM_REPO = 'service:scm:git:repository'
@@ -26,21 +25,7 @@ function renderFeatures(subscription) {
   const repo = params?.[PARAM_REPO]
   if (!url || !repo) return []
   const { t } = useI18nStore()
-  return [
-    h(
-      VBtn,
-      {
-        icon: true,
-        size: 'small',
-        variant: 'text',
-        title: t('service:scm:git:repository'),
-        href: `${url.replace(/\/$/, '')}/${repo}`,
-        target: '_blank',
-        rel: 'noopener noreferrer',
-      },
-      () => h(VIcon, { size: 'small' }, () => 'mdi-git'),
-    ),
-  ]
+  return [renderServiceLink({ icon: 'mdi-git', href: `${url.replace(/\/$/, '')}/${repo}`, title: t('service:scm:git:repository') })]
 }
 
 /** Repository chip. Mirrors the legacy renderKey('service:scm:git:repository'). */
@@ -48,11 +33,7 @@ function renderDetailsKey(subscription) {
   const repo = subscription?.parameters?.[PARAM_REPO]
   if (!repo) return null
   const { t } = useI18nStore()
-  return h(
-    VChip,
-    { size: 'small', variant: 'tonal', class: 'mr-1', title: t('service:scm:git:repository') },
-    () => [h(VIcon, { start: true, size: 'small' }, () => 'mdi-git'), ' ', String(repo)],
-  )
+  return renderDetailsChip({ icon: 'mdi-git', text: repo, title: t('service:scm:git:repository') })
 }
 
 export default { renderFeatures, renderDetailsKey }
